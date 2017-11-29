@@ -1,0 +1,87 @@
+﻿@model IEnumerable<ProyectoGDC.Models.Restaurant>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.loc_latitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.loc_longitud)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.comercial_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.legal_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ruc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.radio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.inferior_horario_atencion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.superior_horario_atencion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.logo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.loc_latitud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.loc_longitud)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.comercial_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.legal_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ruc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.radio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.inferior_horario_atencion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.superior_horario_atencion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.logo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.restaurant_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.restaurant_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.restaurant_id })
+        </td>
+    </tr>
+}
+
+</table>

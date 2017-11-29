@@ -1,0 +1,113 @@
+﻿@model ProyectoGDC.Models.Restaurant
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Restaurant</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.loc_latitud, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.loc_latitud)
+                @Html.ValidationMessageFor(model => model.loc_latitud)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.loc_longitud, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.loc_longitud)
+                @Html.ValidationMessageFor(model => model.loc_longitud)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.comercial_name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.comercial_name)
+                @Html.ValidationMessageFor(model => model.comercial_name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.legal_name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.legal_name)
+                @Html.ValidationMessageFor(model => model.legal_name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ruc, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ruc)
+                @Html.ValidationMessageFor(model => model.ruc)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.description)
+                @Html.ValidationMessageFor(model => model.description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.radio, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.radio)
+                @Html.ValidationMessageFor(model => model.radio)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.inferior_horario_atencion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.inferior_horario_atencion)
+                @Html.ValidationMessageFor(model => model.inferior_horario_atencion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.superior_horario_atencion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.superior_horario_atencion)
+                @Html.ValidationMessageFor(model => model.superior_horario_atencion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.logo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.logo)
+                @Html.ValidationMessageFor(model => model.logo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

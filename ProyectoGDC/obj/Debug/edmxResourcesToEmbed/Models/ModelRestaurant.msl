@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="db_gcd_reservaModelStoreContainer" CdmEntityContainer="db_gcd_reservaEntities">
+    <EntitySetMapping Name="Delivery">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Delivery">
+        <MappingFragment StoreEntitySet="Delivery">
+          <ScalarProperty Name="delivery_id" ColumnName="delivery_id" />
+          <ScalarProperty Name="user_web_id" ColumnName="user_web_id" />
+          <ScalarProperty Name="cod_pago" ColumnName="cod_pago" />
+          <ScalarProperty Name="direccion_delivery" ColumnName="direccion_delivery" />
+          <ScalarProperty Name="fecha_delivery" ColumnName="fecha_delivery" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Delivery_Menu">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Delivery_Menu">
+        <MappingFragment StoreEntitySet="Delivery_Menu">
+          <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+          <ScalarProperty Name="delivery_id" ColumnName="delivery_id" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="subTotal" ColumnName="subTotal" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mesa">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Mesa">
+        <MappingFragment StoreEntitySet="Mesa">
+          <ScalarProperty Name="mesa_id" ColumnName="mesa_id" />
+          <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+          <ScalarProperty Name="hora_desocupada" ColumnName="hora_desocupada" />
+          <ScalarProperty Name="tiempo_estimado_mesa_desocupada" ColumnName="tiempo_estimado_mesa_desocupada" />
+          <ScalarProperty Name="stock_personas" ColumnName="stock_personas" />
+          <ScalarProperty Name="img_mesa" ColumnName="img_mesa" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Plato">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Plato">
+        <MappingFragment StoreEntitySet="Plato">
+          <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+          <ScalarProperty Name="nombre_menu" ColumnName="nombre_menu" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+          <ScalarProperty Name="tipo_menu_id" ColumnName="tipo_menu_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reservacion">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Reservacion">
+        <MappingFragment StoreEntitySet="Reservacion">
+          <ScalarProperty Name="reservacion_id" ColumnName="reservacion_id" />
+          <ScalarProperty Name="user_web_id" ColumnName="user_web_id" />
+          <ScalarProperty Name="fecha_registrada" ColumnName="fecha_registrada" />
+          <ScalarProperty Name="cod_pago" ColumnName="cod_pago" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Restaurant">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Restaurant">
+        <MappingFragment StoreEntitySet="Restaurant">
+          <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+          <ScalarProperty Name="loc_latitud" ColumnName="loc_latitud" />
+          <ScalarProperty Name="loc_longitud" ColumnName="loc_longitud" />
+          <ScalarProperty Name="comercial_name" ColumnName="comercial_name" />
+          <ScalarProperty Name="legal_name" ColumnName="legal_name" />
+          <ScalarProperty Name="ruc" ColumnName="ruc" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="radio" ColumnName="radio" />
+          <ScalarProperty Name="inferior_horario_atencion" ColumnName="inferior_horario_atencion" />
+          <ScalarProperty Name="superior_horario_atencion" ColumnName="superior_horario_atencion" />
+          <ScalarProperty Name="logo" ColumnName="logo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Restaurant_Telefono">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Restaurant_Telefono">
+        <MappingFragment StoreEntitySet="Restaurant_Telefono">
+          <ScalarProperty Name="rest_telefono_id" ColumnName="rest_telefono_id" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="numero_telefono" ColumnName="numero_telefono" />
+          <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_Documento">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Tipo_Documento">
+        <MappingFragment StoreEntitySet="Tipo_Documento">
+          <ScalarProperty Name="tipo_documento_id" ColumnName="tipo_documento_id" />
+          <ScalarProperty Name="tipo_documento_nombre" ColumnName="tipo_documento_nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_Plato">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Tipo_Plato">
+        <MappingFragment StoreEntitySet="Tipo_Plato">
+          <ScalarProperty Name="tipo_menu_id" ColumnName="tipo_menu_id" />
+          <ScalarProperty Name="tipo_menu_nomnbre" ColumnName="tipo_menu_nomnbre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_admin">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.User_admin">
+        <MappingFragment StoreEntitySet="User_admin">
+          <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario_Mesa_Menu">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Usuario_Mesa_Menu">
+        <MappingFragment StoreEntitySet="Usuario_Mesa_Menu">
+          <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+          <ScalarProperty Name="mesa_id" ColumnName="mesa_id" />
+          <ScalarProperty Name="reservacion_id" ColumnName="reservacion_id" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="subTotal" ColumnName="subTotal" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario_Web">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Usuario_Web">
+        <MappingFragment StoreEntitySet="Usuario_Web">
+          <ScalarProperty Name="user_web_id" ColumnName="user_web_id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido_materno" ColumnName="apellido_materno" />
+          <ScalarProperty Name="apellido_paterno" ColumnName="apellido_paterno" />
+          <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="numero_documento" ColumnName="numero_documento" />
+          <ScalarProperty Name="user_web_name" ColumnName="user_web_name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="tipo_documento_id" ColumnName="tipo_documento_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parameter">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Parameter">
+        <MappingFragment StoreEntitySet="Parameter">
+          <ScalarProperty Name="item_id" ColumnName="item_id" />
+          <ScalarProperty Name="table_id" ColumnName="table_id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Settings">
+      <EntityTypeMapping TypeName="db_gcd_reservaModel.Settings">
+        <MappingFragment StoreEntitySet="Settings">
+          <ScalarProperty Name="IGV" ColumnName="IGV" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

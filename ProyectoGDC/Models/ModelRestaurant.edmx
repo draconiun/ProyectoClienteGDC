@@ -1,0 +1,977 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="db_gcd_reservaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="delivery_id" />
+          </Key>
+          <Property Name="delivery_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_web_id" Type="int" Nullable="false" />
+          <Property Name="cod_pago" Type="varchar" MaxLength="29" />
+          <Property Name="direccion_delivery" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_delivery" Type="date" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Delivery_Menu">
+          <Key>
+            <PropertyRef Name="menu_id" />
+            <PropertyRef Name="delivery_id" />
+          </Key>
+          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="delivery_id" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="subTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mesa">
+          <Key>
+            <PropertyRef Name="mesa_id" />
+          </Key>
+          <Property Name="mesa_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="restaurant_id" Type="int" Nullable="false" />
+          <Property Name="hora_desocupada" Type="time" Precision="7" />
+          <Property Name="tiempo_estimado_mesa_desocupada" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="stock_personas" Type="int" Nullable="false" />
+          <Property Name="img_mesa" Type="varchar(max)" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_gcd_reserva.dbo.Parameter' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="item_id" />
+            <PropertyRef Name="table_id" />
+            <PropertyRef Name="description" />
+          </Key>
+          <Property Name="item_id" Type="int" Nullable="false" />
+          <Property Name="table_id" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Plato">
+          <Key>
+            <PropertyRef Name="menu_id" />
+          </Key>
+          <Property Name="menu_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_menu" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="restaurant_id" Type="int" Nullable="false" />
+          <Property Name="tipo_menu_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservacion">
+          <Key>
+            <PropertyRef Name="reservacion_id" />
+          </Key>
+          <Property Name="reservacion_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_web_id" Type="int" Nullable="false" />
+          <Property Name="fecha_registrada" Type="datetime" Nullable="false" />
+          <Property Name="cod_pago" Type="varchar" MaxLength="20" />
+          <Property Name="estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="restaurant_id" />
+          </Key>
+          <Property Name="restaurant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="loc_latitud" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="loc_longitud" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="comercial_name" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="legal_name" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="ruc" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="70" />
+          <Property Name="radio" Type="int" Nullable="false" />
+          <Property Name="inferior_horario_atencion" Type="time" Precision="7" Nullable="false" />
+          <Property Name="superior_horario_atencion" Type="time" Precision="7" Nullable="false" />
+          <Property Name="logo" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Restaurant_Telefono">
+          <Key>
+            <PropertyRef Name="rest_telefono_id" />
+          </Key>
+          <Property Name="rest_telefono_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar(max)" />
+          <Property Name="numero_telefono" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="restaurant_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'db_gcd_reserva.dbo.Settings' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="IGV" />
+          </Key>
+          <Property Name="IGV" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo_Documento">
+          <Key>
+            <PropertyRef Name="tipo_documento_id" />
+          </Key>
+          <Property Name="tipo_documento_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo_documento_nombre" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo_Plato">
+          <Key>
+            <PropertyRef Name="tipo_menu_id" />
+          </Key>
+          <Property Name="tipo_menu_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo_menu_nomnbre" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="User_admin">
+          <Key>
+            <PropertyRef Name="usuario_id" />
+          </Key>
+          <Property Name="usuario_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="restaurant_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario_Mesa_Menu">
+          <Key>
+            <PropertyRef Name="menu_id" />
+            <PropertyRef Name="mesa_id" />
+            <PropertyRef Name="reservacion_id" />
+          </Key>
+          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="mesa_id" Type="int" Nullable="false" />
+          <Property Name="reservacion_id" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="subTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario_Web">
+          <Key>
+            <PropertyRef Name="user_web_id" />
+          </Key>
+          <Property Name="user_web_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="apellido_materno" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="apellido_paterno" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="date" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="numero_documento" Type="char" MaxLength="25" Nullable="false" />
+          <Property Name="user_web_name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="tipo_documento_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="RefDelivery11">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="1" />
+          <End Role="Delivery_Menu" Type="Self.Delivery_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="delivery_id" />
+            </Principal>
+            <Dependent Role="Delivery_Menu">
+              <PropertyRef Name="delivery_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefMesa5">
+          <End Role="Mesa" Type="Self.Mesa" Multiplicity="1" />
+          <End Role="Usuario_Mesa_Menu" Type="Self.Usuario_Mesa_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mesa">
+              <PropertyRef Name="mesa_id" />
+            </Principal>
+            <Dependent Role="Usuario_Mesa_Menu">
+              <PropertyRef Name="mesa_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefPlato10">
+          <End Role="Plato" Type="Self.Plato" Multiplicity="1" />
+          <End Role="Delivery_Menu" Type="Self.Delivery_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plato">
+              <PropertyRef Name="menu_id" />
+            </Principal>
+            <Dependent Role="Delivery_Menu">
+              <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefPlato6">
+          <End Role="Plato" Type="Self.Plato" Multiplicity="1" />
+          <End Role="Usuario_Mesa_Menu" Type="Self.Usuario_Mesa_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plato">
+              <PropertyRef Name="menu_id" />
+            </Principal>
+            <Dependent Role="Usuario_Mesa_Menu">
+              <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefReservacion14">
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="1" />
+          <End Role="Usuario_Mesa_Menu" Type="Self.Usuario_Mesa_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservacion">
+              <PropertyRef Name="reservacion_id" />
+            </Principal>
+            <Dependent Role="Usuario_Mesa_Menu">
+              <PropertyRef Name="reservacion_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefRestaurant1">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="Mesa" Type="Self.Mesa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="restaurant_id" />
+            </Principal>
+            <Dependent Role="Mesa">
+              <PropertyRef Name="restaurant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefRestaurant12">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="User_admin" Type="Self.User_admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="restaurant_id" />
+            </Principal>
+            <Dependent Role="User_admin">
+              <PropertyRef Name="restaurant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefRestaurant18">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="Plato" Type="Self.Plato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="restaurant_id" />
+            </Principal>
+            <Dependent Role="Plato">
+              <PropertyRef Name="restaurant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefRestaurant8">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="Restaurant_Telefono" Type="Self.Restaurant_Telefono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="restaurant_id" />
+            </Principal>
+            <Dependent Role="Restaurant_Telefono">
+              <PropertyRef Name="restaurant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefTipo_Documento4">
+          <End Role="Tipo_Documento" Type="Self.Tipo_Documento" Multiplicity="1" />
+          <End Role="Usuario_Web" Type="Self.Usuario_Web" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Documento">
+              <PropertyRef Name="tipo_documento_id" />
+            </Principal>
+            <Dependent Role="Usuario_Web">
+              <PropertyRef Name="tipo_documento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefTipo_Plato19">
+          <End Role="Tipo_Plato" Type="Self.Tipo_Plato" Multiplicity="1" />
+          <End Role="Plato" Type="Self.Plato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Plato">
+              <PropertyRef Name="tipo_menu_id" />
+            </Principal>
+            <Dependent Role="Plato">
+              <PropertyRef Name="tipo_menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefUsuario_Web13">
+          <End Role="Usuario_Web" Type="Self.Usuario_Web" Multiplicity="1" />
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario_Web">
+              <PropertyRef Name="user_web_id" />
+            </Principal>
+            <Dependent Role="Reservacion">
+              <PropertyRef Name="user_web_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefUsuario_Web9">
+          <End Role="Usuario_Web" Type="Self.Usuario_Web" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario_Web">
+              <PropertyRef Name="user_web_id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="user_web_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_gcd_reservaModelStoreContainer">
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delivery_Menu" EntityType="Self.Delivery_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mesa" EntityType="Self.Mesa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plato" EntityType="Self.Plato" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservacion" EntityType="Self.Reservacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurant_Telefono" EntityType="Self.Restaurant_Telefono" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_Documento" EntityType="Self.Tipo_Documento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_Plato" EntityType="Self.Tipo_Plato" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_admin" EntityType="Self.User_admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario_Mesa_Menu" EntityType="Self.Usuario_Mesa_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario_Web" EntityType="Self.Usuario_Web" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parameter" EntityType="Self.Parameter" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Parameter].[item_id] AS [item_id], 
+    [Parameter].[table_id] AS [table_id], 
+    [Parameter].[description] AS [description]
+    FROM [dbo].[Parameter] AS [Parameter]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Settings" EntityType="Self.Settings" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Settings].[IGV] AS [IGV]
+    FROM [dbo].[Settings] AS [Settings]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="RefDelivery11" Association="Self.RefDelivery11">
+            <End Role="Delivery" EntitySet="Delivery" />
+            <End Role="Delivery_Menu" EntitySet="Delivery_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefMesa5" Association="Self.RefMesa5">
+            <End Role="Mesa" EntitySet="Mesa" />
+            <End Role="Usuario_Mesa_Menu" EntitySet="Usuario_Mesa_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefPlato10" Association="Self.RefPlato10">
+            <End Role="Plato" EntitySet="Plato" />
+            <End Role="Delivery_Menu" EntitySet="Delivery_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefPlato6" Association="Self.RefPlato6">
+            <End Role="Plato" EntitySet="Plato" />
+            <End Role="Usuario_Mesa_Menu" EntitySet="Usuario_Mesa_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefReservacion14" Association="Self.RefReservacion14">
+            <End Role="Reservacion" EntitySet="Reservacion" />
+            <End Role="Usuario_Mesa_Menu" EntitySet="Usuario_Mesa_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefRestaurant1" Association="Self.RefRestaurant1">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="Mesa" EntitySet="Mesa" />
+          </AssociationSet>
+          <AssociationSet Name="RefRestaurant12" Association="Self.RefRestaurant12">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="User_admin" EntitySet="User_admin" />
+          </AssociationSet>
+          <AssociationSet Name="RefRestaurant18" Association="Self.RefRestaurant18">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="Plato" EntitySet="Plato" />
+          </AssociationSet>
+          <AssociationSet Name="RefRestaurant8" Association="Self.RefRestaurant8">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="Restaurant_Telefono" EntitySet="Restaurant_Telefono" />
+          </AssociationSet>
+          <AssociationSet Name="RefTipo_Documento4" Association="Self.RefTipo_Documento4">
+            <End Role="Tipo_Documento" EntitySet="Tipo_Documento" />
+            <End Role="Usuario_Web" EntitySet="Usuario_Web" />
+          </AssociationSet>
+          <AssociationSet Name="RefTipo_Plato19" Association="Self.RefTipo_Plato19">
+            <End Role="Tipo_Plato" EntitySet="Tipo_Plato" />
+            <End Role="Plato" EntitySet="Plato" />
+          </AssociationSet>
+          <AssociationSet Name="RefUsuario_Web13" Association="Self.RefUsuario_Web13">
+            <End Role="Usuario_Web" EntitySet="Usuario_Web" />
+            <End Role="Reservacion" EntitySet="Reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="RefUsuario_Web9" Association="Self.RefUsuario_Web9">
+            <End Role="Usuario_Web" EntitySet="Usuario_Web" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_gcd_reservaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="delivery_id" />
+          </Key>
+          <Property Name="delivery_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_web_id" Type="Int32" Nullable="false" />
+          <Property Name="cod_pago" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="direccion_delivery" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_delivery" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Delivery_Menu" Relationship="Self.RefDelivery11" FromRole="Delivery" ToRole="Delivery_Menu" />
+          <NavigationProperty Name="Usuario_Web" Relationship="Self.RefUsuario_Web9" FromRole="Delivery" ToRole="Usuario_Web" />
+        </EntityType>
+        <EntityType Name="Delivery_Menu">
+          <Key>
+            <PropertyRef Name="menu_id" />
+            <PropertyRef Name="delivery_id" />
+          </Key>
+          <Property Name="menu_id" Type="Int32" Nullable="false" />
+          <Property Name="delivery_id" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="subTotal" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Delivery" Relationship="Self.RefDelivery11" FromRole="Delivery_Menu" ToRole="Delivery" />
+          <NavigationProperty Name="Plato" Relationship="Self.RefPlato10" FromRole="Delivery_Menu" ToRole="Plato" />
+        </EntityType>
+        <EntityType Name="Mesa">
+          <Key>
+            <PropertyRef Name="mesa_id" />
+          </Key>
+          <Property Name="mesa_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="restaurant_id" Type="Int32" Nullable="false" />
+          <Property Name="hora_desocupada" Type="Time" Precision="7" />
+          <Property Name="tiempo_estimado_mesa_desocupada" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="stock_personas" Type="Int32" Nullable="false" />
+          <Property Name="img_mesa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Usuario_Mesa_Menu" Relationship="Self.RefMesa5" FromRole="Mesa" ToRole="Usuario_Mesa_Menu" />
+          <NavigationProperty Name="Restaurant" Relationship="Self.RefRestaurant1" FromRole="Mesa" ToRole="Restaurant" />
+        </EntityType>
+        <EntityType Name="Plato">
+          <Key>
+            <PropertyRef Name="menu_id" />
+          </Key>
+          <Property Name="menu_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_menu" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="restaurant_id" Type="Int32" Nullable="false" />
+          <Property Name="tipo_menu_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Delivery_Menu" Relationship="Self.RefPlato10" FromRole="Plato" ToRole="Delivery_Menu" />
+          <NavigationProperty Name="Usuario_Mesa_Menu" Relationship="Self.RefPlato6" FromRole="Plato" ToRole="Usuario_Mesa_Menu" />
+          <NavigationProperty Name="Restaurant" Relationship="Self.RefRestaurant18" FromRole="Plato" ToRole="Restaurant" />
+          <NavigationProperty Name="Tipo_Plato" Relationship="Self.RefTipo_Plato19" FromRole="Plato" ToRole="Tipo_Plato" />
+        </EntityType>
+        <EntityType Name="Reservacion">
+          <Key>
+            <PropertyRef Name="reservacion_id" />
+          </Key>
+          <Property Name="reservacion_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_web_id" Type="Int32" Nullable="false" />
+          <Property Name="fecha_registrada" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cod_pago" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Usuario_Mesa_Menu" Relationship="Self.RefReservacion14" FromRole="Reservacion" ToRole="Usuario_Mesa_Menu" />
+          <NavigationProperty Name="Usuario_Web" Relationship="Self.RefUsuario_Web13" FromRole="Reservacion" ToRole="Usuario_Web" />
+        </EntityType>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="restaurant_id" />
+          </Key>
+          <Property Name="restaurant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="loc_latitud" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="loc_longitud" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="comercial_name" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="legal_name" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ruc" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="radio" Type="Int32" Nullable="false" />
+          <Property Name="inferior_horario_atencion" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="superior_horario_atencion" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Mesa" Relationship="Self.RefRestaurant1" FromRole="Restaurant" ToRole="Mesa" />
+          <NavigationProperty Name="Plato" Relationship="Self.RefRestaurant18" FromRole="Restaurant" ToRole="Plato" />
+          <NavigationProperty Name="User_admin" Relationship="Self.RefRestaurant12" FromRole="Restaurant" ToRole="User_admin" />
+          <NavigationProperty Name="Restaurant_Telefono" Relationship="Self.RefRestaurant8" FromRole="Restaurant" ToRole="Restaurant_Telefono" />
+        </EntityType>
+        <EntityType Name="Restaurant_Telefono">
+          <Key>
+            <PropertyRef Name="rest_telefono_id" />
+          </Key>
+          <Property Name="rest_telefono_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="numero_telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="restaurant_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Restaurant" Relationship="Self.RefRestaurant8" FromRole="Restaurant_Telefono" ToRole="Restaurant" />
+        </EntityType>
+        <EntityType Name="Tipo_Documento">
+          <Key>
+            <PropertyRef Name="tipo_documento_id" />
+          </Key>
+          <Property Name="tipo_documento_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo_documento_nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario_Web" Relationship="Self.RefTipo_Documento4" FromRole="Tipo_Documento" ToRole="Usuario_Web" />
+        </EntityType>
+        <EntityType Name="Tipo_Plato">
+          <Key>
+            <PropertyRef Name="tipo_menu_id" />
+          </Key>
+          <Property Name="tipo_menu_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo_menu_nomnbre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Plato" Relationship="Self.RefTipo_Plato19" FromRole="Tipo_Plato" ToRole="Plato" />
+        </EntityType>
+        <EntityType Name="User_admin">
+          <Key>
+            <PropertyRef Name="usuario_id" />
+          </Key>
+          <Property Name="usuario_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="restaurant_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Restaurant" Relationship="Self.RefRestaurant12" FromRole="User_admin" ToRole="Restaurant" />
+        </EntityType>
+        <EntityType Name="Usuario_Mesa_Menu">
+          <Key>
+            <PropertyRef Name="menu_id" />
+            <PropertyRef Name="mesa_id" />
+            <PropertyRef Name="reservacion_id" />
+          </Key>
+          <Property Name="menu_id" Type="Int32" Nullable="false" />
+          <Property Name="mesa_id" Type="Int32" Nullable="false" />
+          <Property Name="reservacion_id" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="subTotal" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Mesa" Relationship="Self.RefMesa5" FromRole="Usuario_Mesa_Menu" ToRole="Mesa" />
+          <NavigationProperty Name="Plato" Relationship="Self.RefPlato6" FromRole="Usuario_Mesa_Menu" ToRole="Plato" />
+          <NavigationProperty Name="Reservacion" Relationship="Self.RefReservacion14" FromRole="Usuario_Mesa_Menu" ToRole="Reservacion" />
+        </EntityType>
+        <EntityType Name="Usuario_Web">
+          <Key>
+            <PropertyRef Name="user_web_id" />
+          </Key>
+          <Property Name="user_web_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido_materno" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido_paterno" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="numero_documento" Type="String" MaxLength="25" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="user_web_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipo_documento_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Delivery" Relationship="Self.RefUsuario_Web9" FromRole="Usuario_Web" ToRole="Delivery" />
+          <NavigationProperty Name="Reservacion" Relationship="Self.RefUsuario_Web13" FromRole="Usuario_Web" ToRole="Reservacion" />
+          <NavigationProperty Name="Tipo_Documento" Relationship="Self.RefTipo_Documento4" FromRole="Usuario_Web" ToRole="Tipo_Documento" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="item_id" />
+            <PropertyRef Name="table_id" />
+            <PropertyRef Name="description" />
+          </Key>
+          <Property Name="item_id" Type="Int32" Nullable="false" />
+          <Property Name="table_id" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="IGV" />
+          </Key>
+          <Property Name="IGV" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="RefDelivery11">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="1" />
+          <End Role="Delivery_Menu" Type="Self.Delivery_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="delivery_id" />
+            </Principal>
+            <Dependent Role="Delivery_Menu">
+              <PropertyRef Name="delivery_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefUsuario_Web9">
+          <End Role="Usuario_Web" Type="Self.Usuario_Web" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario_Web">
+              <PropertyRef Name="user_web_id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="user_web_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefPlato10">
+          <End Role="Plato" Type="Self.Plato" Multiplicity="1" />
+          <End Role="Delivery_Menu" Type="Self.Delivery_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plato">
+              <PropertyRef Name="menu_id" />
+            </Principal>
+            <Dependent Role="Delivery_Menu">
+              <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefMesa5">
+          <End Role="Mesa" Type="Self.Mesa" Multiplicity="1" />
+          <End Role="Usuario_Mesa_Menu" Type="Self.Usuario_Mesa_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mesa">
+              <PropertyRef Name="mesa_id" />
+            </Principal>
+            <Dependent Role="Usuario_Mesa_Menu">
+              <PropertyRef Name="mesa_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefRestaurant1">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="Mesa" Type="Self.Mesa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="restaurant_id" />
+            </Principal>
+            <Dependent Role="Mesa">
+              <PropertyRef Name="restaurant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefPlato6">
+          <End Role="Plato" Type="Self.Plato" Multiplicity="1" />
+          <End Role="Usuario_Mesa_Menu" Type="Self.Usuario_Mesa_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plato">
+              <PropertyRef Name="menu_id" />
+            </Principal>
+            <Dependent Role="Usuario_Mesa_Menu">
+              <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefRestaurant18">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="Plato" Type="Self.Plato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="restaurant_id" />
+            </Principal>
+            <Dependent Role="Plato">
+              <PropertyRef Name="restaurant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefTipo_Plato19">
+          <End Role="Tipo_Plato" Type="Self.Tipo_Plato" Multiplicity="1" />
+          <End Role="Plato" Type="Self.Plato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Plato">
+              <PropertyRef Name="tipo_menu_id" />
+            </Principal>
+            <Dependent Role="Plato">
+              <PropertyRef Name="tipo_menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefReservacion14">
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="1" />
+          <End Role="Usuario_Mesa_Menu" Type="Self.Usuario_Mesa_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservacion">
+              <PropertyRef Name="reservacion_id" />
+            </Principal>
+            <Dependent Role="Usuario_Mesa_Menu">
+              <PropertyRef Name="reservacion_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefUsuario_Web13">
+          <End Role="Usuario_Web" Type="Self.Usuario_Web" Multiplicity="1" />
+          <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario_Web">
+              <PropertyRef Name="user_web_id" />
+            </Principal>
+            <Dependent Role="Reservacion">
+              <PropertyRef Name="user_web_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefRestaurant12">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="User_admin" Type="Self.User_admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="restaurant_id" />
+            </Principal>
+            <Dependent Role="User_admin">
+              <PropertyRef Name="restaurant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefRestaurant8">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="Restaurant_Telefono" Type="Self.Restaurant_Telefono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="restaurant_id" />
+            </Principal>
+            <Dependent Role="Restaurant_Telefono">
+              <PropertyRef Name="restaurant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RefTipo_Documento4">
+          <End Role="Tipo_Documento" Type="Self.Tipo_Documento" Multiplicity="1" />
+          <End Role="Usuario_Web" Type="Self.Usuario_Web" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Documento">
+              <PropertyRef Name="tipo_documento_id" />
+            </Principal>
+            <Dependent Role="Usuario_Web">
+              <PropertyRef Name="tipo_documento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_gcd_reservaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" />
+          <EntitySet Name="Delivery_Menu" EntityType="Self.Delivery_Menu" />
+          <EntitySet Name="Mesa" EntityType="Self.Mesa" />
+          <EntitySet Name="Plato" EntityType="Self.Plato" />
+          <EntitySet Name="Reservacion" EntityType="Self.Reservacion" />
+          <EntitySet Name="Restaurant" EntityType="Self.Restaurant" />
+          <EntitySet Name="Restaurant_Telefono" EntityType="Self.Restaurant_Telefono" />
+          <EntitySet Name="Tipo_Documento" EntityType="Self.Tipo_Documento" />
+          <EntitySet Name="Tipo_Plato" EntityType="Self.Tipo_Plato" />
+          <EntitySet Name="User_admin" EntityType="Self.User_admin" />
+          <EntitySet Name="Usuario_Mesa_Menu" EntityType="Self.Usuario_Mesa_Menu" />
+          <EntitySet Name="Usuario_Web" EntityType="Self.Usuario_Web" />
+          <EntitySet Name="Parameter" EntityType="Self.Parameter" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" />
+          <AssociationSet Name="RefDelivery11" Association="Self.RefDelivery11">
+            <End Role="Delivery" EntitySet="Delivery" />
+            <End Role="Delivery_Menu" EntitySet="Delivery_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefUsuario_Web9" Association="Self.RefUsuario_Web9">
+            <End Role="Usuario_Web" EntitySet="Usuario_Web" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="RefPlato10" Association="Self.RefPlato10">
+            <End Role="Plato" EntitySet="Plato" />
+            <End Role="Delivery_Menu" EntitySet="Delivery_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefMesa5" Association="Self.RefMesa5">
+            <End Role="Mesa" EntitySet="Mesa" />
+            <End Role="Usuario_Mesa_Menu" EntitySet="Usuario_Mesa_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefRestaurant1" Association="Self.RefRestaurant1">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="Mesa" EntitySet="Mesa" />
+          </AssociationSet>
+          <AssociationSet Name="RefPlato6" Association="Self.RefPlato6">
+            <End Role="Plato" EntitySet="Plato" />
+            <End Role="Usuario_Mesa_Menu" EntitySet="Usuario_Mesa_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefRestaurant18" Association="Self.RefRestaurant18">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="Plato" EntitySet="Plato" />
+          </AssociationSet>
+          <AssociationSet Name="RefTipo_Plato19" Association="Self.RefTipo_Plato19">
+            <End Role="Tipo_Plato" EntitySet="Tipo_Plato" />
+            <End Role="Plato" EntitySet="Plato" />
+          </AssociationSet>
+          <AssociationSet Name="RefReservacion14" Association="Self.RefReservacion14">
+            <End Role="Reservacion" EntitySet="Reservacion" />
+            <End Role="Usuario_Mesa_Menu" EntitySet="Usuario_Mesa_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="RefUsuario_Web13" Association="Self.RefUsuario_Web13">
+            <End Role="Usuario_Web" EntitySet="Usuario_Web" />
+            <End Role="Reservacion" EntitySet="Reservacion" />
+          </AssociationSet>
+          <AssociationSet Name="RefRestaurant12" Association="Self.RefRestaurant12">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="User_admin" EntitySet="User_admin" />
+          </AssociationSet>
+          <AssociationSet Name="RefRestaurant8" Association="Self.RefRestaurant8">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="Restaurant_Telefono" EntitySet="Restaurant_Telefono" />
+          </AssociationSet>
+          <AssociationSet Name="RefTipo_Documento4" Association="Self.RefTipo_Documento4">
+            <End Role="Tipo_Documento" EntitySet="Tipo_Documento" />
+            <End Role="Usuario_Web" EntitySet="Usuario_Web" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_gcd_reservaModelStoreContainer" CdmEntityContainer="db_gcd_reservaEntities">
+          <EntitySetMapping Name="Delivery">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Delivery">
+              <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="delivery_id" ColumnName="delivery_id" />
+                <ScalarProperty Name="user_web_id" ColumnName="user_web_id" />
+                <ScalarProperty Name="cod_pago" ColumnName="cod_pago" />
+                <ScalarProperty Name="direccion_delivery" ColumnName="direccion_delivery" />
+                <ScalarProperty Name="fecha_delivery" ColumnName="fecha_delivery" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Delivery_Menu">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Delivery_Menu">
+              <MappingFragment StoreEntitySet="Delivery_Menu">
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="delivery_id" ColumnName="delivery_id" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="subTotal" ColumnName="subTotal" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mesa">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Mesa">
+              <MappingFragment StoreEntitySet="Mesa">
+                <ScalarProperty Name="mesa_id" ColumnName="mesa_id" />
+                <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+                <ScalarProperty Name="hora_desocupada" ColumnName="hora_desocupada" />
+                <ScalarProperty Name="tiempo_estimado_mesa_desocupada" ColumnName="tiempo_estimado_mesa_desocupada" />
+                <ScalarProperty Name="stock_personas" ColumnName="stock_personas" />
+                <ScalarProperty Name="img_mesa" ColumnName="img_mesa" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plato">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Plato">
+              <MappingFragment StoreEntitySet="Plato">
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="nombre_menu" ColumnName="nombre_menu" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+                <ScalarProperty Name="tipo_menu_id" ColumnName="tipo_menu_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservacion">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Reservacion">
+              <MappingFragment StoreEntitySet="Reservacion">
+                <ScalarProperty Name="reservacion_id" ColumnName="reservacion_id" />
+                <ScalarProperty Name="user_web_id" ColumnName="user_web_id" />
+                <ScalarProperty Name="fecha_registrada" ColumnName="fecha_registrada" />
+                <ScalarProperty Name="cod_pago" ColumnName="cod_pago" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurant">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Restaurant">
+              <MappingFragment StoreEntitySet="Restaurant">
+                <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+                <ScalarProperty Name="loc_latitud" ColumnName="loc_latitud" />
+                <ScalarProperty Name="loc_longitud" ColumnName="loc_longitud" />
+                <ScalarProperty Name="comercial_name" ColumnName="comercial_name" />
+                <ScalarProperty Name="legal_name" ColumnName="legal_name" />
+                <ScalarProperty Name="ruc" ColumnName="ruc" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="radio" ColumnName="radio" />
+                <ScalarProperty Name="inferior_horario_atencion" ColumnName="inferior_horario_atencion" />
+                <ScalarProperty Name="superior_horario_atencion" ColumnName="superior_horario_atencion" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurant_Telefono">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Restaurant_Telefono">
+              <MappingFragment StoreEntitySet="Restaurant_Telefono">
+                <ScalarProperty Name="rest_telefono_id" ColumnName="rest_telefono_id" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="numero_telefono" ColumnName="numero_telefono" />
+                <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_Documento">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Tipo_Documento">
+              <MappingFragment StoreEntitySet="Tipo_Documento">
+                <ScalarProperty Name="tipo_documento_id" ColumnName="tipo_documento_id" />
+                <ScalarProperty Name="tipo_documento_nombre" ColumnName="tipo_documento_nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_Plato">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Tipo_Plato">
+              <MappingFragment StoreEntitySet="Tipo_Plato">
+                <ScalarProperty Name="tipo_menu_id" ColumnName="tipo_menu_id" />
+                <ScalarProperty Name="tipo_menu_nomnbre" ColumnName="tipo_menu_nomnbre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_admin">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.User_admin">
+              <MappingFragment StoreEntitySet="User_admin">
+                <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="restaurant_id" ColumnName="restaurant_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario_Mesa_Menu">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Usuario_Mesa_Menu">
+              <MappingFragment StoreEntitySet="Usuario_Mesa_Menu">
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="mesa_id" ColumnName="mesa_id" />
+                <ScalarProperty Name="reservacion_id" ColumnName="reservacion_id" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="subTotal" ColumnName="subTotal" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario_Web">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Usuario_Web">
+              <MappingFragment StoreEntitySet="Usuario_Web">
+                <ScalarProperty Name="user_web_id" ColumnName="user_web_id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido_materno" ColumnName="apellido_materno" />
+                <ScalarProperty Name="apellido_paterno" ColumnName="apellido_paterno" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="numero_documento" ColumnName="numero_documento" />
+                <ScalarProperty Name="user_web_name" ColumnName="user_web_name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="tipo_documento_id" ColumnName="tipo_documento_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parameter">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Parameter">
+              <MappingFragment StoreEntitySet="Parameter">
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="table_id" ColumnName="table_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="db_gcd_reservaModel.Settings">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="IGV" ColumnName="IGV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
